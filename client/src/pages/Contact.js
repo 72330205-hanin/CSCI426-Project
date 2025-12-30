@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import api from "../api/axios"; // ✅ CHANGED
+import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
@@ -14,14 +14,17 @@ const Contact = () => {
     last_name: "",
     email: "",
     subject: "",
-    message: "",
+    message: ""
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await api.post("/api/contact", form); // ✅ CHANGED
+      const res = await axios.post(
+        "http://localhost:5000/api/contact",
+        form
+      );
 
       setSuccess(res.data.message);
 
@@ -30,12 +33,14 @@ const Contact = () => {
         last_name: "",
         email: "",
         subject: "",
-        message: "",
+        message: ""
       });
 
-      setTimeout(() => setSuccess(""), 5000);
+      setTimeout(() => {
+        setSuccess("");
+      }, 5000);
     } catch (err) {
-      alert(err?.response?.data?.message || "Failed to send message");
+      alert("Failed to send message");
     }
   };
 
@@ -46,10 +51,7 @@ const Contact = () => {
 
         <div className="contact-left">
           <h2>Send us a message</h2>
-          <p>
-            Fill out the form below and our team will get back to you within 24
-            hours.
-          </p>
+          <p>Fill out the form below and our team will get back to you within 24 hours.</p>
 
           {success && <p className="success-msg">{success}</p>}
 
@@ -60,6 +62,7 @@ const Contact = () => {
                 <input
                   type="text"
                   required
+                  placeholder="Enter your first name"
                   value={form.first_name}
                   onChange={(e) =>
                     setForm({ ...form, first_name: e.target.value })
@@ -72,6 +75,7 @@ const Contact = () => {
                 <input
                   type="text"
                   required
+                  placeholder="Enter your last name"
                   value={form.last_name}
                   onChange={(e) =>
                     setForm({ ...form, last_name: e.target.value })
@@ -85,6 +89,7 @@ const Contact = () => {
               <input
                 type="email"
                 required
+                placeholder="Enter your email"
                 value={form.email}
                 onChange={(e) =>
                   setForm({ ...form, email: e.target.value })
@@ -116,6 +121,7 @@ const Contact = () => {
               <label>Message</label>
               <textarea
                 required
+                placeholder="Tell us more about your inquiry..."
                 value={form.message}
                 onChange={(e) =>
                   setForm({ ...form, message: e.target.value })
@@ -133,34 +139,46 @@ const Contact = () => {
           <h2>Contact Information</h2>
 
           <div className="info-box">
-            <EmailOutlinedIcon />
+            <div className="icon-wrapper">
+              <EmailOutlinedIcon />
+            </div>
             <div>
               <h4>Email</h4>
               <p>support@learnhub.com</p>
+              <small>We’ll respond within 24 hours</small>
             </div>
           </div>
 
           <div className="info-box">
-            <PhoneOutlinedIcon />
+            <div className="icon-wrapper">
+              <PhoneOutlinedIcon />
+            </div>
             <div>
               <h4>Phone</h4>
               <p>+1 (555) 123-4567</p>
+              <small>Mon–Fri, 9am–6pm EST</small>
             </div>
           </div>
 
           <div className="info-box">
-            <LocationOnOutlinedIcon />
+            <div className="icon-wrapper">
+              <LocationOnOutlinedIcon />
+            </div>
             <div>
               <h4>Office</h4>
-              <p>San Francisco, CA</p>
+              <p>123 Learning Street</p>
+              <small>San Francisco, CA 94102</small>
             </div>
           </div>
 
           <div className="info-box">
-            <AccessTimeOutlinedIcon />
+            <div className="icon-wrapper">
+              <AccessTimeOutlinedIcon />
+            </div>
             <div>
               <h4>Support Hours</h4>
-              <p>Mon–Fri, 9am–6pm</p>
+              <p>Monday - Friday</p>
+              <small>9:00 AM - 6:00 PM EST</small>
             </div>
           </div>
         </div>

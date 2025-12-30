@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import api from "../api/axios"; // ✅ CHANGED
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -14,7 +14,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await api.post("/api/login", { // ✅ CHANGED
+      const res = await axios.post("http://localhost:5000/api/login", {
         email,
         password,
       });
@@ -23,7 +23,7 @@ const Login = () => {
 
       navigate("/");
     } catch (err) {
-      alert(err?.response?.data?.message || "Invalid email or password");
+      alert("Invalid email or password");
     }
   };
 
@@ -46,6 +46,7 @@ const Login = () => {
               <input
                 type="email"
                 required
+                placeholder="Enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -56,6 +57,7 @@ const Login = () => {
               <input
                 type="password"
                 required
+                placeholder="Enter password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

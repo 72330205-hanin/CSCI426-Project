@@ -1,8 +1,10 @@
 import { useEffect, useState, useRef } from "react";
-import api from "../api/axios"; // ✅ CHANGED
+import axios from "axios";
 import "../assets/styles/adminTheme.css";
 import "../assets/styles/adminEnrollments.css";
 import AdminSidebar from "../components/AdminSidebar";
+
+const API = "http://localhost:5000";
 
 const AdminEnrollments = () => {
   const [stats, setStats] = useState({ total: 0, freeCount: 0, paidCount: 0 });
@@ -27,19 +29,18 @@ const AdminEnrollments = () => {
   }, []);
 
   const fetchStats = async () => {
-    const res = await api.get("/api/admin/enrollments/stats"); // ✅ CHANGED
+    const res = await axios.get(`${API}/api/admin/enrollments/stats`);
     setStats(res.data);
   };
 
   const fetchEnrollments = async (q = "") => {
-    const res = await api.get(`/api/admin/enrollments?search=${q}`); // ✅ CHANGED
+    const res = await axios.get(`${API}/api/admin/enrollments?search=${q}`);
     setRows(res.data);
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this enrollment?")) return;
-
-    await api.delete(`/api/admin/enrollments/${id}`); // ✅ CHANGED
+    await axios.delete(`${API}/api/admin/enrollments/${id}`);
     fetchEnrollments(search);
     fetchStats();
     setOpenMenuId(null);
@@ -133,6 +134,7 @@ const AdminEnrollments = () => {
                               openMenuId === r.id ? null : r.id
                             );
                           }}
+                          aria-label="Actions"
                         >
                           ⋮
                         </button>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import api from "../api/axios"; // ✅ CHANGED
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -21,15 +21,13 @@ const GetStarted = () => {
     }
 
     try {
-      // ✅ REGISTER
-      await api.post("/api/register", {
+      await axios.post("http://localhost:5000/api/register", {
         name,
         email,
         password,
       });
 
-      // ✅ AUTO LOGIN
-      const loginRes = await api.post("/api/login", {
+      const loginRes = await axios.post("http://localhost:5000/api/login", {
         email,
         password,
       });
@@ -38,7 +36,7 @@ const GetStarted = () => {
 
       navigate("/");
     } catch (err) {
-      alert(err?.response?.data?.message || "Registration failed");
+      alert(err.response?.data?.message || "Registration failed");
     }
   };
 
@@ -61,6 +59,7 @@ const GetStarted = () => {
               <input
                 type="text"
                 required
+                placeholder="Enter your name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -71,6 +70,7 @@ const GetStarted = () => {
               <input
                 type="email"
                 required
+                placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -81,6 +81,7 @@ const GetStarted = () => {
               <input
                 type="password"
                 required
+                placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -91,6 +92,7 @@ const GetStarted = () => {
               <input
                 type="password"
                 required
+                placeholder="Re-enter your password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />

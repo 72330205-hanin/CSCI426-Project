@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import api, { API_BASE_URL } from "../api/axios";
+import axios from "axios";
 import CourseCard from "./CourseCard";
 import { useNavigate } from "react-router-dom";
+
+const API = "http://localhost:5000";
 
 const PopularCourses = () => {
   const navigate = useNavigate();
@@ -16,7 +18,7 @@ const PopularCourses = () => {
   useEffect(() => {
     const loadPopular = async () => {
       try {
-        const res = await api.get("/api/popular-courses");
+        const res = await axios.get(`${API}/api/popular-courses`);
         setCourses(res.data || []);
       } catch (err) {
         console.error("Failed to load popular courses:", err);
@@ -55,7 +57,7 @@ const PopularCourses = () => {
               <CourseCard
                 image={
                   c.thumbnail_url
-                    ? `${API_BASE_URL}/uploads/${c.thumbnail_url}`
+                    ? `${API}/uploads/${c.thumbnail_url}`
                     : "/images/course-placeholder.jpg"
                 }
                 category={c.category || "General"}

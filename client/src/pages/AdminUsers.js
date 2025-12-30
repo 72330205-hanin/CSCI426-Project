@@ -8,12 +8,6 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import CloseIcon from "@mui/icons-material/Close";
 
-/* ✅ API BASE (LOCAL OR ONLINE) */
-const API =
-  process.env.REACT_APP_API_URL ||
-  "https://csci426-project.onrender.com";
-
-/* helpers */
 const roleLabel = (role) => {
   const r = String(role || "user").toLowerCase();
   if (r === "admin") return "Admin";
@@ -35,13 +29,17 @@ const AdminUsers = () => {
   const [openMenuId, setOpenMenuId] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
-  const [role, setRole] = useState("user");
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "user",
+  });
 
-  /* ✅ FETCH USERS */
   const fetchUsers = () => {
     setLoading(true);
     axios
-      .get(`${API}/api/admin/users`)
+      .get("http://localhost:5000/api/admin/users")
       .then((res) => setUsers(res.data || []))
       .catch(() => setUsers([]))
       .finally(() => setLoading(false));
@@ -51,53 +49,75 @@ const AdminUsers = () => {
     fetchUsers();
   }, []);
 
-  /* ✅ SEARCH */
   const filtered = useMemo(() => {
     const s = q.trim().toLowerCase();
     if (!s) return users;
+
     return users.filter((u) => {
-      return (
-        String(u.name).toLowerCase().includes(s) ||
-        String(u.email).toLowerCase().includes(s) ||
-        roleLabel(u.role).toLowerCase().includes(s)
-      );
+      const name = String(u.name || "").toLowerCase();
+      const email = String(u.email || "").toLowerCase();
+      const role = roleLabel(u.role).toLowerCase();
+      return name.includes(s) || email.includes(s) || role.includes(s);
     });
   }, [q, users]);
 
-  /* ✅ OPEN EDIT */
+  const openAdd = () => {
+    setEditingUser(null);
+    setForm({ name: "", email: "", password: "", role: "user" });
+    setModalOpen(true);
+  };
+
   const openEdit = (u) => {
     setEditingUser(u);
-    setRole(u.role || "user");
+    setForm({
+      name: u.name || "",
+      email: u.email || "",
+      password: "",
+      role: u.role || "user",
+    });
     setModalOpen(true);
   };
 
   const closeModal = () => {
     setModalOpen(false);
     setEditingUser(null);
-    setRole("user");
+    setForm({ name: "", email: "", password: "", role: "user" });
   };
 
-  /* ✅ UPDATE ROLE (BACKEND MATCHES THIS EXACTLY) */
   const submit = async (e) => {
     e.preventDefault();
-    if (!editingUser) return;
 
     try {
-      await axios.put(`${API}/api/admin/users/${editingUser.id}`, {
-        role,
-      });
+      if (editingUser) {
+        await axios.put(
+          `http://localhost:5000/api/admin/users/${editingUser.id}`,
+          {
+            name: form.name,
+            email: form.email,
+            role: form.role,
+            password: form.password,
+          }
+        );
+      } else {
+        await axios.post("http://localhost:5000/api/admin/users", {
+          name: form.name,
+          email: form.email,
+          password: form.password,
+          role: form.role,
+        });
+      }
+
       closeModal();
       fetchUsers();
     } catch (err) {
-      alert(err?.response?.data?.message || "Update failed");
+      alert(err?.response?.data?.message || "Operation failed");
     }
   };
 
-  /* ✅ DELETE USER */
   const removeUser = async (id) => {
     if (!window.confirm("Delete this user?")) return;
     try {
-      await axios.delete(`${API}/api/admin/users/${id}`);
+      await axios.delete(`http://localhost:5000/api/admin/users/${id}`);
       fetchUsers();
     } catch (err) {
       alert(err?.response?.data?.message || "Delete failed");
@@ -112,7 +132,7 @@ const AdminUsers = () => {
         <div className="au-topbar">
           <div>
             <h1 className="au-title">Users</h1>
-            <p className="au-subtitle">Manage all users in your system</p>
+            <p className="au-subtitle">Manage all users in your LMS</p>
           </div>
         </div>
 
@@ -122,7 +142,7 @@ const AdminUsers = () => {
               <SearchIcon className="au-searchIcon" fontSize="small" />
               <input
                 className="au-searchInput"
-                placeholder="Search users..."
+                placeholder="Search users by name, email, or role..."
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
               />
@@ -140,7 +160,7 @@ const AdminUsers = () => {
                     <th className="au-th">Email</th>
                     <th className="au-th">Role</th>
                     <th className="au-th">Status</th>
-                    <th className="au-th">Joined</th>
+                    <th className="au-th">Joined Date</th>
                     <th className="au-th au-thRight">Actions</th>
                   </tr>
                 </thead>
@@ -151,21 +171,19 @@ const AdminUsers = () => {
                       <td className="au-td">{u.name}</td>
                       <td className="au-td">{u.email}</td>
                       <td className="au-td">{roleLabel(u.role)}</td>
+
                       <td className="au-td">
                         <span className="au-status active">active</span>
                       </td>
-                      <td className="au-td">
-                        {formatDate(u.created_at)}
-                      </td>
+
+                      <td className="au-td">{formatDate(u.created_at)}</td>
 
                       <td className="au-td au-tdRight">
                         <div className="au-actions">
                           <button
                             className="au-moreBtn"
                             onClick={() =>
-                              setOpenMenuId(
-                                openMenuId === u.id ? null : u.id
-                              )
+                              setOpenMenuId(openMenuId === u.id ? null : u.id)
                             }
                           >
                             <MoreVertIcon fontSize="small" />
@@ -184,7 +202,7 @@ const AdminUsers = () => {
                                 }}
                               >
                                 <EditOutlinedIcon fontSize="small" />
-                                Edit Role
+                                Edit
                               </button>
 
                               <button
@@ -206,8 +224,8 @@ const AdminUsers = () => {
 
                   {filtered.length === 0 && (
                     <tr>
-                      <td colSpan={6} className="au-empty">
-                        No users found
+                      <td className="au-empty" colSpan={6}>
+                        No users found.
                       </td>
                     </tr>
                   )}
@@ -217,19 +235,12 @@ const AdminUsers = () => {
           </div>
         </div>
 
-        {/* ✅ EDIT MODAL */}
         {modalOpen && (
           <div className="au-modalOverlay" onClick={closeModal}>
-            <div
-              className="au-modal"
-              onClick={(e) => e.stopPropagation()}
-            >
+            <div className="au-modal" onClick={(e) => e.stopPropagation()}>
               <div className="au-modalHeader">
-                <div className="au-modalTitle">Edit Role</div>
-                <button
-                  className="au-closeBtn"
-                  onClick={closeModal}
-                >
+                <div className="au-modalTitle"></div>
+                <button className="au-closeBtn" onClick={closeModal} type="button">
                   <CloseIcon fontSize="small" />
                 </button>
               </div>
@@ -238,8 +249,8 @@ const AdminUsers = () => {
                 <label className="au-label">Role</label>
                 <select
                   className="au-input"
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
+                  value={form.role}
+                  onChange={(e) => setForm({ ...form, role: e.target.value })}
                 >
                   <option value="user">Student</option>
                   <option value="instructor">Instructor</option>
@@ -255,7 +266,7 @@ const AdminUsers = () => {
                     Cancel
                   </button>
                   <button type="submit" className="au-btnPrimary">
-                    Save
+                    {editingUser ? "Save" : "Add"}
                   </button>
                 </div>
               </form>

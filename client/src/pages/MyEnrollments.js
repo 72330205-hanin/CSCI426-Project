@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import api from "../api/axios"; // ✅ CHANGED
+import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../assets/styles/myenrollments.css";
+
+const API = "http://localhost:5000";
 
 const MyEnrollments = () => {
   const [enrollments, setEnrollments] = useState([]);
@@ -16,23 +18,22 @@ const MyEnrollments = () => {
       return;
     }
 
-    api
-      .get(`/api/enrollments/${user.id}`) // ✅ CHANGED
+    axios
+      .get(`${API}/api/enrollments/${user.id}`)
       .then((res) => {
-        setEnrollments(res.data || []);
+        console.log("ENROLLMENTS:", res.data); 
+        setEnrollments(res.data);
       })
       .catch((err) => console.error("GET ENROLLMENTS ERROR:", err))
       .finally(() => setLoading(false));
   }, [user]);
 
   const cancelEnrollment = async (enrollmentId) => {
-    const confirmed = window.confirm(
-      "Do you really want to cancel this course?"
-    );
+    const confirmed = window.confirm("Do you really want to cancel this course?");
     if (!confirmed) return;
 
     try {
-      await api.delete(`/api/enroll/${enrollmentId}`); // ✅ CHANGED
+      await axios.delete(`${API}/api/enroll/${enrollmentId}`);
 
       setEnrollments((prev) =>
         prev.filter((e) => e.enrollment_id !== enrollmentId)
@@ -40,7 +41,8 @@ const MyEnrollments = () => {
 
       alert("Course canceled successfully");
     } catch (err) {
-      alert(err?.response?.data?.message || "Failed to cancel enrollment");
+      console.error("CANCEL ERROR:", err.response?.data || err.message);
+      alert(err.response?.data?.message || "Failed to cancel enrollment");
     }
   };
 
@@ -61,54 +63,41 @@ const MyEnrollments = () => {
           <div className="enrollments-grid">
             {enrollments.map((course) => {
               const imgSrc = course.thumbnail_url
-                ? `/uploads/${course.thumbnail_url}` // ✅ CHANGED
+                ? `${API}/uploads/${course.thumbnail_url}`
                 : "/images/course-placeholder.jpg";
 
               return (
-                <div
-                  className="enrollment-card"
-                  key={course.enrollment_id}
-                >
+                <div className="enrollment-card" key={course.enrollment_id}>
                   <div className="course-image">
                     <img
                       src={imgSrc}
                       alt={course.title || "Course"}
                       onError={(e) => {
-                        e.currentTarget.src =
-                          "/images/course-placeholder.jpg";
+                        e.currentTarget.src = "/images/course-placeholder.jpg";
                       }}
                     />
                   </div>
 
-                  <span className="course-category">
-                    {course.course_type}
-                  </span>
+                  <span className="course-category">{course.course_type}</span>
 
                   <h3 className="course-title">{course.title}</h3>
 
-                  <div className="course-meta">
-                    ⭐ {course.rating || 0} •{" "}
-                    {course.lessons_count || 0} Lessons •{" "}
-                    {course.duration_minutes || 0} min
-                  </div>
+                  <div className="course-meta">⭐ 4.8 • 12 Lessons • 6h 30m</div>
 
                   <span className="enroll-date">
                     Enrolled on{" "}
                     {course.enrolled_at
-                      ? new Date(
-                          course.enrolled_at
-                        ).toLocaleDateString()
+                      ? new Date(course.enrolled_at).toLocaleDateString()
                       : ""}
                   </span>
+
 
                   <div className="card-footer">
                     <span className="course-price">Enrolled</span>
 
                     <button
                       className="cancel-btn"
-                      onClick={() =>
-                        cancelEnrollment(course.enrollment_id)
-                      }
+                      onClick={() => cancelEnrollment(course.enrollment_id)}
                     >
                       Cancel
                     </button>
