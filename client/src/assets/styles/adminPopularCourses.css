@@ -1,0 +1,295 @@
+
+.ap-font {
+  font-family: inherit;
+}
+
+
+.ap-topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.ap-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.ap-subtitle {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.ap-statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 12px 0 16px;
+}
+
+.ap-statCard {
+  background: #fff;
+  border: 1px solid #eef0f4;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 1px 10px rgba(20, 20, 20, 0.04);
+}
+
+.ap-statTitle {
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.ap-statValue {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.ap-addRow {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 16px;
+}
+
+.ap-addBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.ap-addBar select {
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  min-width: 220px;
+  outline: none;
+}
+
+.ap-addBar input {
+  height: 40px;
+  width: 64px;
+  text-align: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  outline: none;
+}
+
+.ap-addBtn {
+  height: 40px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 999px;
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ap-addBtn:hover {
+  background: #1d4ed8;
+}
+
+.ap-addBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.ap-card {
+  background: #fff;
+  border: 1px solid #eef0f4;
+  border-radius: 14px;
+  box-shadow: 0 1px 12px rgba(20, 20, 20, 0.05);
+  overflow: hidden;
+}
+
+.ap-searchRow {
+  padding: 14px;
+  border-bottom: 1px solid #eef0f4;
+}
+
+.ap-searchBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #eef0f4;
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+.ap-searchIcon {
+  color: #9ca3af;
+}
+
+.ap-searchInput {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.ap-tableWrap {
+  width: 100%;
+  overflow: auto;
+}
+
+.ap-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ap-table thead th {
+  text-align: left;
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 700;
+  padding: 12px 14px;
+  background: #fbfbfc;
+  border-bottom: 1px solid #eef0f4;
+}
+
+.ap-table tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #f0f2f6;
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+.ap-empty {
+  padding: 22px 14px;
+  color: #6b7280;
+}
+
+.ap-courseCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 340px;
+}
+
+.ap-thumb {
+  width: 56px;
+  height: 40px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid #eef0f4;
+}
+
+.ap-courseTitle {
+  font-weight: 700;
+}
+
+.ap-courseSub {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+
+.ap-orderInput {
+  width: 84px;
+  height: 36px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  text-align: center;
+  outline: none;
+}
+
+.ap-actions {
+  position: relative;
+  display: inline-flex;
+  justify-content: flex-end;
+}
+
+.ap-kebabBtn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 6px;
+  border-radius: 10px;
+}
+
+.ap-kebabBtn:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.ap-menu {
+  position: absolute;
+  top: 38px;
+  right: 0;
+  min-width: 140px;
+  background: #fff;
+  border: 1px solid #eef0f4;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(17, 24, 39, 0.12);
+  padding: 8px;
+  z-index: 999;
+}
+
+.ap-menuItem {
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  padding: 10px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.ap-menuItem:hover {
+  background: #f3f4f6;
+}
+
+.ap-danger {
+  color: #b91c1c;
+}
+
+.ap-danger:hover {
+  background: #fee2e2;
+}
+
+.ap-footNote {
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #6b7280;
+  background: #fbfbfc;
+}
+
+@media (max-width: 900px) {
+  .ap-topbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ap-statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .ap-addRow {
+    justify-content: stretch;
+  }
+
+  .ap-addBar {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .ap-addBar select {
+    min-width: 180px;
+    flex: 1;
+  }
+}

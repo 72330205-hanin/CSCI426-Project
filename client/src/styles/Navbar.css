@@ -1,0 +1,294 @@
+/* ================================
+   GLOBAL
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  background: white;
+  color: #111;
+}
+
+/* ================================
+   NAVBAR (DESKTOP)
+================================ */
+.navbar {
+  width: 100%;
+  padding: 20px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  background: white;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-icon {
+  font-size: 22px;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+}
+
+.nav-links li {
+  cursor: pointer;
+  font-size: 15px;
+  color: #444;
+}
+
+.nav-right button {
+  margin-left: 15px;
+}
+
+.login-btn {
+  background: transparent;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.get-started-btn {
+  background: #0066ff;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+/* ================================
+   HERO SECTION
+================================ */
+.hero-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 60px;
+  margin-top: 20px;
+}
+
+.hero-left {
+  width: 45%;
+}
+
+.badge {
+  background: #eef3ff;
+  color: #3355ff;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.hero-title {
+  font-size: 48px;
+  margin: 20px 0;
+  line-height: 1.2;
+}
+
+.hero-subtext {
+  color: #555;
+  font-size: 17px;
+  width: 85%;
+  margin-bottom: 25px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.start-learning-btn {
+  background: #0066ff;
+  color: white;
+  padding: 12px 22px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.watch-demo-btn {
+  background: transparent;
+  border: 1px solid #999;
+  padding: 12px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.stats {
+  display: flex;
+  gap: 40px;
+}
+
+.stats h3 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.stats span {
+  color: #777;
+  font-size: 14px;
+}
+
+/* ================================
+   HERO IMAGE
+================================ */
+.hero-right {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.hero-image-box {
+  position: relative;
+}
+
+.hero-image {
+  width: 550px;
+  border-radius: 10px;
+}
+
+.progress-card {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  background: white;
+  padding: 14px 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+.progress-label {
+  font-size: 13px;
+  color: #555;
+}
+
+/* ================================
+   MOBILE MENU
+================================ */
+.mobile-only {
+  display: none;
+}
+
+.hamburger {
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  z-index: 9999;
+  padding: 25px;
+  overflow-y: auto;
+}
+
+.mobile-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.close-icon {
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.mobile-links {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 40px;
+}
+
+.mobile-links li {
+  padding: 15px 0;
+  font-size: 18px;
+  color: #444;
+}
+
+/* MOBILE MENU BUTTONS */
+.mobile-login-btn {
+  width: 100%;
+  padding: 14px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.mobile-get-started-btn {
+  width: 100%;
+  padding: 14px;
+  background: #0057c9;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* ================================
+   RESPONSIVE SETTINGS
+================================ */
+@media (max-width: 850px) {
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: block;
+  }
+
+  .navbar {
+    padding: 20px;
+  }
+
+  /* Hero turns vertical */
+  .hero-container {
+    flex-direction: column;
+    padding: 30px;
+  }
+
+  .hero-left,
+  .hero-right {
+    width: 100%;
+  }
+
+  .hero-right {
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-image {
+    width: 100%;
+  }
+
+  .stats {
+    gap: 25px;
+  }
+}

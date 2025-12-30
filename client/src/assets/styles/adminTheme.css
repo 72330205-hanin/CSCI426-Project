@@ -1,0 +1,136 @@
+
+:root {
+  --bg: #f6f8fb;
+  --card: #ffffff;
+  --text: #101828;
+  --muted: #667085;
+  --line: #e6eaf2;
+
+  --primary: #1f6feb;
+  --primary-soft: #e9f2ff;
+
+  --success: #2bb9a7;
+  --success-soft: #e9fbf8;
+
+  --danger: #e11d48;
+  --danger-soft: #ffe4e6;
+
+  --radius: 16px;
+  --shadow: 0 12px 28px rgba(16, 24, 40, 0.08);
+
+  --font: ui-sans-serif, system-ui, -apple-system, Segoe UI,
+          Roboto, Helvetica, Arial;
+}
+
+
+.ad-scope {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+}
+
+.ad-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.ad-main {
+  flex: 1;
+  padding: 24px;
+}
+
+.ad-pageTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 16px;
+}
+
+.ad-title {
+  font-size: 22px;
+  font-weight: 900;
+  margin: 0;
+}
+
+.ad-subtitle {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.ad-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.ad-cardPad {
+  padding: 14px;
+}
+
+.ad-tableWrap {
+  overflow-x: auto;
+}
+
+.ad-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.ad-table thead {
+  background: var(--primary-soft);
+}
+
+.ad-table th {
+  text-align: left;
+  padding: 12px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.ad-table td {
+  padding: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.ad-table tbody tr:hover {
+  background: #f9fbff;
+}
+
+.ad-badge {
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.ad-badge.success {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.ad-badge.danger {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.ad-btn {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ad-btn.primary {
+  background: var(--primary);
+  color: white;
+}
+
+.ad-btn.danger {
+  background: var(--danger);
+  color: white;
+}
