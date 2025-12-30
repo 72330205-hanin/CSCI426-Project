@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import api from "../api/axios"; // ✅ CHANGED
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import FeedbackSuccessModal from "../components/FeedbackSuccessModal";
@@ -11,7 +11,7 @@ const Feedback = () => {
   const location = useLocation();
 
   const user = JSON.parse(localStorage.getItem("user"));
-  const alertShown = useRef(false); 
+  const alertShown = useRef(false);
 
   const [courseName, setCourseName] = useState(
     location.state?.courseName || ""
@@ -37,8 +37,8 @@ const Feedback = () => {
       return;
     }
 
-    axios
-      .get(`http://localhost:5000/api/enrollments/${user.id}`)
+    api
+      .get(`/api/enrollments/${user.id}`) // ✅ CHANGED
       .then((res) => {
         if (res.data.length > 0) {
           setCanGiveFeedback(true);
@@ -63,13 +63,13 @@ const Feedback = () => {
     }
 
     try {
-     await axios.post("http://localhost:5000/api/feedback", {
-  user_id: user?.id,
-  user_name: user?.name,
-  course_name: courseName,
-  rating,
-  feedback_message: feedback,
-});
+      await api.post("/api/feedback", { // ✅ CHANGED
+        user_id: user?.id,
+        user_name: user?.name,
+        course_name: courseName,
+        rating,
+        feedback_message: feedback,
+      });
 
       setSuccessOpen(true);
     } catch {
@@ -141,10 +141,7 @@ const Feedback = () => {
         )}
       </main>
 
-      <FeedbackSuccessModal
-        open={successOpen}
-        onClose={handleCloseModal}
-      />
+      <FeedbackSuccessModal open={successOpen} onClose={handleCloseModal} />
 
       <Footer />
     </>
